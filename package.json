@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "spin.js": "^4.0.0"
   }
 }

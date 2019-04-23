@@ -11,6 +11,7 @@ setInterval(() => {}, 60000);
 fetch(proxyurl + url)
   .then(res => res.json())
   .then(data => {
+    document.querySelector('.loader').style.display = 'none';
     console.log(data.data);
     let output = '';
 
