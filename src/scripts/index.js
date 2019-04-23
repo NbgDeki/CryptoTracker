@@ -16,12 +16,15 @@ fetch(proxyurl + url)
     let output = '';
 
     data.data.forEach(doc => {
+      let num =
+        doc.quote.USD.percent_change_24h > 0 ? 'text-success' : 'text-danger';
+
       output += `
         <tr>
           <td>${doc.name}</td>
           <td>${doc.symbol}</td>
           <td>$ ${doc.quote.USD.price}</td>
-          <td>${doc.quote.USD.percent_change_24h}</td>
+          <td class="${num} bold">${doc.quote.USD.percent_change_24h} %</td>
           <td>
             <div class="input-group input-group-sm">
               <input type="number" class="form-control mb-1" />

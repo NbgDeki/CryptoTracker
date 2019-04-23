@@ -3,3 +3,11 @@
 nav {
   margin-bottom: 3rem;
 }
+
+table {
+  tbody {
+    tr:nth-child(even) {
+      background-color: #f4f4f4;
+    }
+  }
+}
