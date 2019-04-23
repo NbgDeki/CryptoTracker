@@ -1,4 +1,5 @@
 import '../styles/index.scss';
+import { parse } from 'path';
 
 const proxyurl = 'https://cors-anywhere.herokuapp.com/';
 let apiKey = '6958609d-7fcc-44ef-8996-71ea12a520e9';
@@ -29,7 +30,7 @@ fetch(proxyurl + url)
           <td class="${num}">${doc.quote.USD.percent_change_24h} %</td>
           <td>
             <div class="input-group input-group-sm">
-              <input type="number" class="form-control mb-1" />
+              <input type="number" class="form-control mb-2" />
               <button class="btn btn-success btn-block btn-sm disabled">
                 Submit
               </button>
@@ -46,21 +47,29 @@ fetch(proxyurl + url)
     let buttons = document
       .getElementById('table-js')
       .getElementsByClassName('btn');
-    for (const button of buttons) {
+
+    Array.from(buttons).forEach(button => {
       button.addEventListener('click', event => {
         const selectedRow = event.target.closest('tr');
         let amount = selectedRow.querySelector('.myCoin');
 
         // Parse String to number
-        const cryptoValue = Number(
+        const cryptoValue = parseFloat(
           selectedRow.querySelector('.crypto-value').textContent
         );
-        const myValue = Number(selectedRow.querySelector('input').value);
-        amount.innerHTML = cryptoValue * myValue;
+        const myValue = parseFloat(selectedRow.querySelector('input').value);
 
-        // console.log(event);
-        // console.log(cryptoValue * myValue);
+        if (isNaN(myValue) || myValue <= 0) {
+          console.log('Please enter a valid number');
+          amount.style.color = 'red';
+          amount.innerHTML = 'Please enter a valid number';
+          selectedRow.querySelector('input').style.border = '2px solid red';
+        } else {
+          amount.innerHTML = cryptoValue * myValue;
+          selectedRow.querySelector('input').style.border = '1px solid #ced4da';
+          amount.style.color = 'black';
+        }
       });
-    }
+    });
   })
   .catch(err => console.log(err));
