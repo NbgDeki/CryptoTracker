@@ -49,8 +49,8 @@ fetch(proxyurl + url)
       .getElementsByClassName('btn');
 
     Array.from(buttons).forEach(button => {
-      button.addEventListener('click', event => {
-        const selectedRow = event.target.closest('tr');
+      button.addEventListener('click', e => {
+        const selectedRow = e.target.closest('tr');
         let amount = selectedRow.querySelector('.myCoin');
 
         // Parse String to number
@@ -60,15 +60,40 @@ fetch(proxyurl + url)
         const myValue = parseFloat(selectedRow.querySelector('input').value);
 
         if (isNaN(myValue) || myValue <= 0) {
-          console.log('Please enter a valid number');
           amount.style.color = 'red';
           amount.innerHTML = 'Please enter a valid number';
-          selectedRow.querySelector('input').style.border = '2px solid red';
+          selectedRow.querySelector('input').style.border = '1px solid red';
         } else {
           amount.innerHTML = cryptoValue * myValue;
           selectedRow.querySelector('input').style.border = '1px solid #ced4da';
           amount.style.color = 'black';
         }
+      });
+    });
+
+    let inputs = document
+      .getElementById('table-js')
+      .getElementsByClassName('form-control');
+
+    Array.from(inputs).forEach(input => {
+      input.addEventListener('keyup', e => {
+        const selectedInput = e.target.closest('input');
+        console.log(selectedInput);
+        let buttons = document
+          .getElementById('table-js')
+          .getElementsByClassName('btn');
+
+        Array.from(buttons).forEach(button => {
+          if (selectedInput) {
+            button.classList.remove('disabled');
+          } else {
+            button.classList.add('disabled');
+          }
+
+          // if (e.keyCode === 13) {
+          //   button.click();
+          // }
+        });
       });
     });
   })
