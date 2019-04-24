@@ -1,5 +1,4 @@
 import '../styles/index.scss';
-import { parse } from 'path';
 
 const proxyurl = 'https://cors-anywhere.herokuapp.com/';
 let apiKey = '6958609d-7fcc-44ef-8996-71ea12a520e9';
@@ -31,7 +30,7 @@ fetch(proxyurl + url)
           <td>
             <div class="input-group input-group-sm">
               <input type="number" class="form-control mb-2" />
-              <button class="btn btn-success btn-block btn-sm disabled">
+              <button class="btn btn-success btn-block btn-sm" disabled>
                 Submit
               </button>
             </div>
@@ -59,15 +58,17 @@ fetch(proxyurl + url)
         );
         const myValue = parseFloat(selectedRow.querySelector('input').value);
 
-        if (isNaN(myValue) || myValue <= 0) {
-          amount.style.color = 'red';
-          amount.innerHTML = 'Please enter a valid number';
-          selectedRow.querySelector('input').style.border = '1px solid red';
-        } else {
-          amount.innerHTML = cryptoValue * myValue;
-          selectedRow.querySelector('input').style.border = '1px solid #ced4da';
-          amount.style.color = 'black';
-        }
+        amount.innerHTML = cryptoValue * myValue;
+
+        // if (isNaN(myValue) || myValue <= 0) {
+        //   amount.style.color = 'red';
+        //   amount.innerHTML = 'Please enter a valid number';
+        //   selectedRow.querySelector('input').style.border = '1px solid red';
+        // } else {
+        //   amount.innerHTML = cryptoValue * myValue;
+        //   selectedRow.querySelector('input').style.border = '1px solid #ced4da';
+        //   amount.style.color = 'black';
+        // }
       });
     });
 
@@ -82,18 +83,21 @@ fetch(proxyurl + url)
         let buttons = document
           .getElementById('table-js')
           .getElementsByClassName('btn');
+        const selectedRow = e.target.closest('tr');
+        let amount = selectedRow.querySelector('.myCoin');
 
-        Array.from(buttons).forEach(button => {
-          if (selectedInput) {
-            button.classList.remove('disabled');
-          } else {
-            button.classList.add('disabled');
-          }
+        const button = e.target.parentElement.querySelector('button');
 
-          // if (e.keyCode === 13) {
-          //   button.click();
-          // }
-        });
+        if (selectedInput.value) {
+          button.removeAttribute('disabled');
+        } else {
+          button.setAttribute('disabled', true);
+          amount.innerHTML = '';
+        }
+
+        if (e.keyCode === 13) {
+          button.click();
+        }
       });
     });
   })
