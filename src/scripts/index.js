@@ -43,12 +43,15 @@ const getData = () => {
       });
 
       //Counting crypto amount you own
+      // Getting array of buttons
       let buttons = document
         .getElementById('table-js')
         .getElementsByClassName('btn');
 
+      // Adding Event listeners to every button
       Array.from(buttons).forEach(button => {
         button.addEventListener('click', e => {
+          // Finding closest table row
           const selectedRow = e.target.closest('tr');
           let amount = selectedRow.querySelector('.myCoin');
 
@@ -58,19 +61,21 @@ const getData = () => {
           );
           const myValue = parseFloat(selectedRow.querySelector('input').value);
 
-          amount.innerHTML = cryptoValue * myValue;
+          amount.innerHTML = `${cryptoValue * myValue}$`;
         });
       });
 
       // Enabling buttons and input values submited on ENTER
+      // Getting array of inputs
       let inputs = document
         .getElementById('table-js')
         .getElementsByClassName('form-control');
 
+      // Adding Event listeners for every button
       Array.from(inputs).forEach(input => {
         input.addEventListener('keyup', e => {
+          // Finding closes input
           const selectedInput = e.target.closest('input');
-          console.log(selectedInput);
           let buttons = document
             .getElementById('table-js')
             .getElementsByClassName('btn');
@@ -87,6 +92,7 @@ const getData = () => {
             amount.innerHTML = '';
           }
 
+          // Button clicks when ENTER is pressed
           if (e.keyCode === 13) {
             button.click();
           }
